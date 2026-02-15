@@ -1,3 +1,4 @@
+```python
 # import socket module
 from socket import *
 # In order to terminate the program
@@ -25,6 +26,10 @@ def webServer(port=13331):
       
       # Status line (200 OK)
       outputdata = b"HTTP/1.1 200 OK\r\n"
+
+      # REQUIRED headers (Gradescope)
+      outputdata += b"Server: MyWebServer\r\n"
+      outputdata += b"Connection: close\r\n"
               
       # Content-Type header
       outputdata += b"Content-Type: text/html; charset=UTF-8\r\n"
@@ -40,19 +45,21 @@ def webServer(port=13331):
         
       # Send everything in ONE send command
       connectionSocket.send(outputdata)
-        
       connectionSocket.close()
       
     except Exception as e:
       # 404 Not Found response
       outputdata = b"HTTP/1.1 404 Not Found\r\n"
+
+      # REQUIRED headers (Gradescope)
+      outputdata += b"Server: MyWebServer\r\n"
+      outputdata += b"Connection: close\r\n"
+
       outputdata += b"Content-Type: text/html; charset=UTF-8\r\n"
       outputdata += b"\r\n"
       outputdata += b"<html><body><h1>404 Not Found</h1></body></html>"
 
       connectionSocket.send(outputdata)
-
-      # Close client socket
       connectionSocket.close()
 
   # DO NOT uncomment these for submission
@@ -61,3 +68,4 @@ def webServer(port=13331):
 
 if __name__ == "__main__":
   webServer(13331)
+```
